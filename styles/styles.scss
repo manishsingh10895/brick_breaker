@@ -1,0 +1,102 @@
+@import "./variables";
+
+.btn {
+  border-radius: 25px;
+  background-color: $primaryThemeColor;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  width: 100%;
+  font-size: 14px;
+  margin: 0px 0px 0px 15px;
+}
+
+.btn.negative {
+  background-color: $negativeColor;
+}
+
+.btn.positive {
+  background-color: $negativeColor;
+}
+
+.container.extra-life {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+
+.container {
+  max-width: 800px;
+  padding: 30px 2px;
+
+  .actions {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .pay-text {
+    font-size: 20px;
+    padding: 15px;
+    text-align: center;
+  }
+}
+
+.notifier {
+  transition: 0.1s all ease-in-out;
+  visibility: hidden;
+  min-width: 250px;
+  position: fixed;
+  padding: 16px;
+  bottom: 10px;
+  border-radius: 8px;
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+
+  span {
+    font-size: 16px;
+    color: white;
+  }
+
+  &.show {
+    visibility: visible;
+    animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
+  }
+
+  &.success {
+    background: $positiveColor;
+  }
+
+  &.error {
+    background: $negativeColor;
+  }
+
+  &.info {
+    background: $neutralColor;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+
+  to {
+    bottom: 10px;
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    bottom: 0;
+    opacity: 0;
+  }
+}

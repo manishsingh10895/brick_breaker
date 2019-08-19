@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game</title>
+
+    <link rel="stylesheet" href="styles/styles.scss">
+
+    <style>
+        img {
+            display: none;
+        }
+
+        audio {
+            display: none;
+        }
+
+        #gameScreen {
+            border: 1px solid green;
+        }
+    </style>
+
+</head>
+
+<body>
+    <img id="img_ball" src="assets/images/ball.png" alt="" srcset="">
+    <img id="img_brick" src="assets/images/brick.png" alt="" srcset="">
+    <audio id="ball_collision_sound" src="assets/sounds/ball_brick.mp3"></audio>
+    <audio id="game_start_sound" src="assets/sounds/game_start.mp3"></audio>
+    <audio id="game_over_sound" src="assets/sounds/game_over.mp3"></audio>
+
+    <canvas width="800" height="600" id="gameScreen"></canvas>
+
+    <div id="app">
+
+        <div class="container extra-life">
+
+            <div class="pay-text">
+                Pay 0.1 eth to increase life
+            </div>
+
+            <div class="actions">
+
+                <button class="btn btn-pay">
+                    Pay
+                </button>
+
+                <button class="btn btn-cancel negative">
+                    Cancel
+                </button>
+
+                <!-- <button class="btn btn-notif negative">
+                    Notif
+                </button> -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="src/index.ts"></script>
+</body>
+
+</html>

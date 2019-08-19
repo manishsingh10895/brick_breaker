@@ -1,0 +1,21 @@
+{
+  "name": "game",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html"
+  },
+  "author": "manishsingh10895",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "@types/web3": "^1.0.19",
+    "sass": "^1.22.10",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "rxjs": "^6.5.2",
+    "web3": "^1.2.1"
+  }
+}

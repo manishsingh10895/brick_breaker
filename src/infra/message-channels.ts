@@ -1,0 +1,4 @@
+export enum MessageChannels {
+    BALL_BRICK_COLLIDE, BALL_PADDLE_COLLIDE,
+    GAME_START, GAME_OVER, LIFE_LOST
+}

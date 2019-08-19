@@ -1,0 +1,5 @@
+export const Config = {
+    MAX_PAY_TO_LIVE_COUNT: 1,
+    LIVES: 3,
+    OWNER_ADDRESS: "0xcb2B0245F06897D81e43B0a45C3D7AE781CD50c0"  
+};
