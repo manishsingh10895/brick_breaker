@@ -4,7 +4,7 @@ import InputHandler from "./input";
 import { GameObject } from "./infra/gameObject";
 import Brick from './brick';
 import { buildLevel, GAME_LEVELS } from "./levels";
-import Utils from './utils';
+import { Utils } from './utils';
 import { GAME_STATE } from "./infra/gamestate";
 import LivesText from "./lives-text";
 import { MBus } from "./infra/message-bus";
@@ -14,6 +14,7 @@ import Scorer from './scorer';
 import ScoreText from "./score-text";
 import Background from "./background";
 import { Config } from './config';
+import Coin, { CoinState } from "./coin";
 
 export default class Game {
     paddle!: Paddle;
@@ -22,6 +23,8 @@ export default class Game {
     livesText: LivesText;
 
     bricks: Array<Brick> = [];
+
+    coins: Array<Coin> = [];
 
     gameObjects: Array<GameObject> = [];
 
@@ -39,7 +42,19 @@ export default class Game {
 
     background: Background;
 
-    constructor(public gameWidth: number, public gameHeight: number, private _utils: Utils, public ctx: CanvasRenderingContext2D) {
+    //TimeElapsed in seconds
+    timeElapsed: number = 0;
+
+    timeInterval: any;
+
+    ticks: number = 0;
+
+    constructor(
+        public gameWidth: number,
+        public gameHeight: number,
+        private _utils: Utils,
+        public ctx: CanvasRenderingContext2D
+    ) {
         this.ball = new Ball(this);
         this.paddle = new Paddle(this);
         this.livesText = new LivesText(this);
@@ -73,12 +88,24 @@ export default class Game {
         this.gameObjects = [
             this.ball, this.paddle, this.livesText, this.scoreText
         ];
+
+        this.timeInterval = setInterval(() => {
+            this.timeElapsed++;
+        }, 1000);
     }
 
     _resetGame() {
         this.currentLevel = 0;
         this.lives = Config.LIVES;
+
         this.scorer.resetScore();
+        this.background.resetPaymentCount();
+
+        this.timeElapsed = 0;
+
+        if (this.timeInterval) {
+            clearInterval(this.timeInterval);
+        }
     }
 
     /**
@@ -94,6 +121,8 @@ export default class Game {
                 this.bricks = buildLevel(this, this.levels[this.currentLevel]);
 
                 this.ball.reset();
+
+                this.ball.increaseSpeed();
 
                 console.log(this.ball.position);
 
@@ -117,6 +146,14 @@ export default class Game {
             || this.gameState === GAME_STATE.NEW_LEVEL
             || this.gameState === GAME_STATE.LOADING
         ) return;
+
+        console.log(this.ticks);
+
+        if (this.ticks % 724 == 0) {
+            this.coins.push(new Coin(this));
+
+            console.log(this.coins);
+        }
 
         //0 lives game over
         if (this.lives == 0) {
@@ -158,14 +195,12 @@ export default class Game {
             this.gameState = GAME_STATE.NEW_LEVEL;
         }
 
-        [...this.gameObjects, ...this.bricks].forEach((g) => {
+        [...this.gameObjects, ...this.bricks, ...this.coins].forEach((g) => {
             g.update(dt);
         });
 
-        this.bricks = this.bricks.filter(o => {
-            return !o.toDelete;
-        });
 
+        this._removeUnwantedGameObjects();
     }
 
     /**
@@ -176,11 +211,23 @@ export default class Game {
         this.scorer.resetScore();
     }
 
+    _removeUnwantedGameObjects() {
+        // Delete bricks who have been touched by the ball
+        this.bricks = this.bricks.filter(o => {
+            return !o.toDelete;
+        });
+
+        this.coins = this.coins.filter((c: Coin) => {
+            return c.state !== CoinState.COMPLETED;
+        })
+    }
+
     _gameOver() {
-        MBus.publishData(new MessageData(MessageChannels.GAME_OVER));
-        this.scorer.resetScore();
-        this.background.resetPaymentCount();
         this.gameState = GAME_STATE.GAMEOVER;
+        MBus.publishData(new MessageData(MessageChannels.GAME_OVER));
+
+        this.timeElapsed = 0;
+        if (this.timeInterval) clearInterval(this.timeInterval);
     }
 
     /**
@@ -188,7 +235,7 @@ export default class Game {
      * @param ctx Canvas context
      */
     draw(ctx: CanvasRenderingContext2D) {
-        [...this.gameObjects, ...this.bricks].forEach((g) => {
+        [...this.gameObjects, ...this.bricks, ...this.coins].forEach((g) => {
             g.draw(ctx);
         });
 
@@ -253,6 +300,8 @@ export default class Game {
     _drawGameOver(ctx: CanvasRenderingContext2D) {
         this._utils.drawOverlay(ctx, this);
         this._utils.drawTextCenter(ctx, "GAME OVER", this);
+        ctx.fillText("SCORE " + this.scorer.currentScore, this.gameWidth / 2, (this.gameHeight) / 2 + 50);
+        ctx.fillText("COINS COLLECTED " + this.scorer.coinsCollected, this.gameWidth / 2, (this.gameHeight) / 2 + 100);
     }
 
 

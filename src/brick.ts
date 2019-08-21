@@ -1,7 +1,7 @@
 import { GameObject } from './infra/gameObject';
 import Game from './game';
 import { Pos } from './infra/pos';
-import { detectCollision } from './collisionDetection';
+import { detectBallCollision } from './collisionDetection';
 import Audios from './audios';
 import { Observable, Observer } from 'rxjs';
 import { MBus } from './infra/message-bus';
@@ -42,11 +42,17 @@ export default class Brick implements GameObject {
 
         // TODO :: Better collision detection
         // Way better
-        let collision = detectCollision(this.game.ball, this);
+        let collision = detectBallCollision(this.game.ball, this);
         if (collision.collided) {
-            console.log("collided");
-            this.game.ball.speed.y = -this.game.ball.speed.y;
-            // this.game.ball.speed.x = -this.game.ball.speed.x;
+
+            if (collision.side && (collision.side == 'left' || collision.side == 'right')) {
+                this.game.ball.speed.x = -this.game.ball.speed.x;
+            } else {
+                this.game.ball.speed.y = -this.game.ball.speed.y;
+            }
+
+
+            console.log(collision.side);
 
             console.log(this.game.ball.speed);
 

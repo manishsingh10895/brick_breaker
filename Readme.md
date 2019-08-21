@@ -12,6 +12,9 @@ ___
 * Metamask extension installed in browser
     > [Install metamask for chrome](https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn)
 
+#### Pre run 
+Change Owner account address in config.ts
+
 #### How to run
 > `yarn start`
 

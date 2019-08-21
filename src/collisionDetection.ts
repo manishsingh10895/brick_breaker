@@ -2,72 +2,72 @@ import Game from "./game";
 import Ball from "./ball";
 import { GameObject } from "./infra/gameObject";
 import { COPYFILE_FICLONE_FORCE } from "constants";
+import Utils from "./utils";
+import { Collsion } from "./infra/collision";
 
 /**
  * Detects a collision between ball and a game object
  * @param ball ball game object
  * @param gameObject Any other game object
  */
-export function detectCollision(ball: Ball, gameObject: GameObject): {
-    collided: boolean,
-    side?: 'top' | 'bottom' | 'left' | 'right'
-} {
+export function detectBallCollision(ball: Ball, gameObject: GameObject): Collsion {
+    return detectRectRectCollision(ball, gameObject);
+}
 
-    let bottomOfBall = ball.position.y + ball.size;
-    let topOfBall = ball.position.y;
-    let leftOfBall = ball.position.x;
-    let rightOfBall = ball.position.x + ball.size;
+/**
+ * Detects collision between two game objects 
+ * in rectangular shape
+ * 
+ * @param rect1 first rectable game object
+ * @param rect2 second rectable game object 
+ */
+export function detectRectRectCollision(rect1: GameObject, rect2: GameObject): Collsion {
 
-    let topOfObject = gameObject.position.y - 2;
-    let leftSideOfObject = gameObject.position.x - 2;
-    let rightSideOfObject = gameObject.position.x + gameObject.width + 2;
-    let bottomOfObject = gameObject.position.y + gameObject.height + 2;
+    if (!rect1.center) {
+        rect1.center = Utils.getCenter(rect1);
+    }
 
-    if (
-        bottomOfBall >= topOfObject &&
-        topOfBall <= bottomOfObject &&
-        ball.position.x + ball.size >= leftSideOfObject &&
-        ball.position.x <= rightSideOfObject
-    ) {
-        // debugger;
+    if (!rect2.center) {
+        rect2.center = Utils.getCenter(rect2);
+    }
 
-        let d1 = Math.abs(bottomOfBall - bottomOfObject);
+    let dx = rect1.center.x - rect2.center.x;
+    let dy = rect1.center.y - rect2.center.y;
 
-        // if (bottomOfBall >= topOfObject) {
-        //     return {
-        //         collided: true,
-        //         side: 'top'
-        //     }
-        // }
+    let dw = (rect1.width + rect2.width) / 2;
+    let dh = (rect1.height + rect2.height) / 2;
 
-        // if (topOfBall <= bottomOfBall) {
-        //     return {
-        //         collided: true,
-        //         side: 'bottom'
-        //     }
-        // }
+    let crossWidth = dw * dy;
+    let crossHeight = dw * dx;
 
-        // if (leftOfBall >= leftSideOfObject) {
-        //     return {
-        //         collided: true,
-        //         side: "left"
-        //     }
-        // }
+    if (Math.abs(dx) <= dw && Math.abs(dy) <= dh) {
 
-        // if (rightOfBall <= rightSideOfObject) {
-        //     return {
-        //         collided: true,
-        //         side: "right"
-        //     }
-        // }
+        let direction: any;
 
-        return {
-            collided: true
+
+        if (crossWidth > crossHeight) {
+            console.log("if");
+            direction = (crossWidth > (-crossHeight)) ? 'bottom' : 'left';
+        } else {
+            console.log("else");
+            direction = (crossWidth > -(crossHeight)) ? 'right' : 'top';
         }
-    } else {
+
+
+        if (!direction) {
+            console.log(dw, dh);
+            console.log(dx, dy, crossWidth, crossHeight);
+            debugger;
+        }
+
         return {
-            collided: false
+            collided: true,
+            side: direction
         }
     }
 
+
+    return {
+        collided: false
+    }
 }

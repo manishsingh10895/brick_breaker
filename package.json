@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "parcel index.html --open",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html",
+    "test": "parcel test/index.html --open"
   },
   "author": "manishsingh10895",
   "license": "MIT",

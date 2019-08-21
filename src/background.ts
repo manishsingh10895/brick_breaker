@@ -40,8 +40,6 @@ export default class Background {
                     value: web3.utils.toWei("0.1", 'ether')
                 };
 
-                console.log(trx)
-
                 let s = await web3.eth.sendTransaction(trx);
                 console.log(s);
 

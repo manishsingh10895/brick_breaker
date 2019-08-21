@@ -4,6 +4,7 @@ export default class Scorer {
 
     currentScore: number = 0;
 
+    coinsCollected: number = 0;
 
     constructor() {
         this.highScore = this.getHighScore();
@@ -15,8 +16,13 @@ export default class Scorer {
         this._checkHighScore();
     }
 
+    incrementCoinCount() {
+        this.coinsCollected++;
+    }
+
     resetScore() {
         this.currentScore = 0;
+        this.coinsCollected = 0;
     }
 
     setHighScore() {

@@ -5,6 +5,8 @@ export interface GameObject {
     position: Pos;
     width: number;
     height: number;
+    center?: Pos;
+
 
     draw: (ctx: CanvasRenderingContext2D) => void;
     update: (dt: number) => void;

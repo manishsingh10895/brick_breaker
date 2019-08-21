@@ -13,7 +13,7 @@ function init() {
 
     ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-    let game = new Game(GAME_WIDTH, GAME_HEIGHT, new Utils(), ctx);
+    let game = new Game(GAME_WIDTH, GAME_HEIGHT, Utils, ctx);
 
     let lastTime = 0;
 
@@ -22,6 +22,7 @@ function init() {
 
         ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
+        game.ticks++;
         game.update(dt);
         game.draw(ctx)
 
