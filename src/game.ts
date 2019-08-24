@@ -53,7 +53,8 @@ export default class Game {
         public gameWidth: number,
         public gameHeight: number,
         private _utils: Utils,
-        public ctx: CanvasRenderingContext2D
+        public ctx: CanvasRenderingContext2D,
+        public userDetails: any
     ) {
         this.ball = new Ball(this);
         this.paddle = new Paddle(this);
@@ -170,7 +171,7 @@ export default class Game {
                 let paymentHandled = this.background.showPaymentOption();
 
                 let s = paymentHandled
-                    .subscribe((res) => {
+                    .subscribe((res: any) => {
                         console.log(res);
 
                         //If user pays the amount then 
@@ -228,6 +229,8 @@ export default class Game {
 
         this.timeElapsed = 0;
         if (this.timeInterval) clearInterval(this.timeInterval);
+
+        this.background.sendUserCoins(this.scorer.coinsCollected);
     }
 
     /**
@@ -303,7 +306,4 @@ export default class Game {
         ctx.fillText("SCORE " + this.scorer.currentScore, this.gameWidth / 2, (this.gameHeight) / 2 + 50);
         ctx.fillText("COINS COLLECTED " + this.scorer.coinsCollected, this.gameWidth / 2, (this.gameHeight) / 2 + 100);
     }
-
-
-
 }

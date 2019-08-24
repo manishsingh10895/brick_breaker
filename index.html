@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Game</title>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
     <link rel="stylesheet" href="styles/styles.scss">
 
     <style>
@@ -33,7 +33,44 @@
     <audio id="game_start_sound" src="assets/sounds/game_start.mp3"></audio>
     <audio id="game_over_sound" src="assets/sounds/game_over.mp3"></audio>
 
-    <canvas width="800" height="600" id="gameScreen"></canvas>
+    <div id="user-info" style="display:none" class="user-info section is-large">
+
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Enter your name: </label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <p class="control">
+                        <input class="input" type="text" id="name">
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Ethereum Address</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <p class="control">
+                        <input id="eth-address" placeholder="eth address" class="input" type="text">
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a id="submitAction" class="button is-primary is-outlined">
+                Submit
+            </a>
+        </div>
+
+    </div>
+
+
+    <canvas style="display: none" id="gameScreen" width="800" height="600"></canvas>
 
     <div id="app">
 
@@ -58,13 +95,11 @@
                 </button> -->
 
             </div>
-
         </div>
-
     </div>
+    <script src="src/index.ts">
 
-
-    <script src="src/index.ts"></script>
+    </script>
 </body>
 
 </html>

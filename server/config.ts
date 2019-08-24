@@ -1,7 +1,15 @@
 export const Config = {
-    MAX_PAY_TO_LIVE_COUNT: 1,
-    LIVES: 3,
-    OWNER_ADDRESS: "0xcb2B0245F06897D81e43B0a45C3D7AE781CD50c0",
+
+    NETWORK: {
+        "rinkeby": {
+            "uri": "https://rinkeby.infura.io/fa3c616f2fc5451f901a1d1238986e51",
+            "mnemonic": "game saddle oyster laundry equal loop lunch allow cactus endless hover unfair"
+        },
+        "local": {
+            "uri": "http://localhost:7545"
+        }
+    }
+    ,
     BRT_TOKEN_ADDRESS: "0x70d9d88d7176f6c861a4bc47de9e78ae89d7dac6",
     BRT_ABI: [
         {
@@ -303,3 +311,4 @@ export const Config = {
         }
     ]
 };
+
