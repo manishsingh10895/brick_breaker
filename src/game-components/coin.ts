@@ -1,11 +1,11 @@
-import { GameObject } from "./infra/gameObject";
-import { Pos } from "./infra/pos";
+import { GameObject } from "../infra/gameObject";
+import { Pos } from "../infra/pos";
 import Game from "./game";
 import Utils from "./utils";
 import { detectBallCollision, detectRectRectCollision } from "./collisionDetection";
-import { MBus } from "./infra/message-bus";
-import { MessageChannels } from "./infra/message-channels";
-import { MessageData } from "./infra/message-data";
+import { MBus } from "../infra/message-bus";
+import { MessageChannels } from "../infra/message-channels";
+import { MessageData } from "../infra/message-data";
 
 export enum CoinState {
     FALLING, TOUCHED, COMPLETED

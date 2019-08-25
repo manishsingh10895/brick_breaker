@@ -1,6 +1,6 @@
-import { GameObject } from "./infra/gameObject";
+import { GameObject } from "../infra/gameObject";
 import Game from "./game";
-import { Pos } from "./infra/pos";
+import { Pos } from "../infra/pos";
 
 const DEFAULT_POS: Pos = {
     x: 10,

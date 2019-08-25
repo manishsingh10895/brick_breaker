@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="styles/styles.scss">
 
     <style>
-        img {
+        img.asset {
             display: none;
         }
 
-        audio {
+        audio.asset {
             display: none;
         }
 
@@ -26,78 +26,18 @@
 </head>
 
 <body>
-    <img id="img_ball" src="assets/images/ball.png" alt="" srcset="">
-    <img id="img_brick" src="assets/images/brick.png" alt="" srcset="">
-    <img id="img_coin" src="assets/images/coin.png" alt="" srcset="">
-    <audio id="ball_collision_sound" src="assets/sounds/ball_brick.mp3"></audio>
-    <audio id="game_start_sound" src="assets/sounds/game_start.mp3"></audio>
-    <audio id="game_over_sound" src="assets/sounds/game_over.mp3"></audio>
+    <img class="asset" id="img_ball" src="assets/images/ball.png" alt="" srcset="">
+    <img class="asset" id="img_brick" src="assets/images/brick.png" alt="" srcset="">
+    <img class="asset" id="img_coin" src="assets/images/coin.png" alt="" srcset="">
+    <audio class="asset" id="ball_collision_sound" src="assets/sounds/ball_brick.mp3"></audio>
+    <audio class="asset" id="game_start_sound" src="assets/sounds/game_start.mp3"></audio>
+    <audio class="asset" id="game_over_sound" src="assets/sounds/game_over.mp3"></audio>
 
-    <div id="user-info" style="display:none" class="user-info section is-large">
-
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Enter your name: </label>
-            </div>
-            <div class="field-body">
-                <div class="field">
-                    <p class="control">
-                        <input class="input" type="text" id="name">
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="field is-horizontal">
-            <div class="field-label is-normal">
-                <label class="label">Ethereum Address</label>
-            </div>
-            <div class="field-body">
-                <div class="field">
-                    <p class="control">
-                        <input id="eth-address" placeholder="eth address" class="input" type="text">
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="actions">
-            <a id="submitAction" class="button is-primary is-outlined">
-                Submit
-            </a>
-        </div>
+    <div id="main">
 
     </div>
 
-
-    <canvas style="display: none" id="gameScreen" width="800" height="600"></canvas>
-
-    <div id="app">
-
-        <div class="container extra-life">
-
-            <div class="pay-text">
-                Pay 0.1 eth to increase life
-            </div>
-
-            <div class="actions">
-
-                <button class="btn btn-pay">
-                    Pay
-                </button>
-
-                <button class="btn btn-cancel negative">
-                    Cancel
-                </button>
-
-                <!-- <button class="btn btn-notif negative">
-                    Notif
-                </button> -->
-
-            </div>
-        </div>
-    </div>
-    <script src="src/index.ts">
+    <script src="src/index.tsx">
 
     </script>
 </body>

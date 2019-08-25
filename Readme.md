@@ -1,10 +1,7 @@
 # Brick breaker
 
 ### Simple brick breaker like game
-
-
-___
-
+---
 #### Requirements
 
 * Install parcel bundler globally
@@ -22,6 +19,9 @@ Change Owner account address in config.ts
 * Compile Smart Contracts in token/contracts (yarn compile contracts)
 * deploy or local ganache 
     > `cd token && node deploy -network local`
+
+### Post Deploy
+Server will automatically work with the newly created contract, you need to copy  and replace **abi** and **address** from migrations.json to src/game-components/config.ts
 
 
 #### How to run

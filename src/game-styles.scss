@@ -1,0 +1,19 @@
+@import "../styles/variables";
+
+.payment-options-container {
+  padding-top: 15px;
+  display: flex;
+}
+
+.game-container {
+  flex-direction: column;
+}
+
+.user-tokens {
+  text-align: center;
+  font-size: 16px;
+  span {
+    font-weight: bold;
+    color: $positiveColor;
+  }
+}

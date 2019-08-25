@@ -1,11 +1,11 @@
 import Game from "./game";
-import { Speed } from "./infra/speed";
-import { Pos } from "./infra/pos";
-import { GameObject } from "./infra/gameObject";
+import { Speed } from "../infra/speed";
+import { Pos } from "../infra/pos";
+import { GameObject } from "../infra/gameObject";
 import { detectBallCollision } from "./collisionDetection";
-import { MBus } from "./infra/message-bus";
-import { MessageChannels } from "./infra/message-channels";
-import { MessageData } from "./infra/message-data";
+import { MBus } from "../infra/message-bus";
+import { MessageChannels } from "../infra/message-channels";
+import { MessageData } from "../infra/message-data";
 
 const DEFAULT_POSITION: Pos = {
     x: 20,
@@ -18,6 +18,10 @@ const DEFAULT_SPEED: Speed = {
 }
 
 const MAX_SPEED = 10;
+
+export enum BallState {
+    ROLLING, RESPAWNED
+}
 
 export default class Ball implements GameObject {
 
@@ -35,6 +39,8 @@ export default class Ball implements GameObject {
 
     radius: number = this.size / 2;
 
+    state: BallState = BallState.ROLLING
+
     constructor(private game: Game) {
         this.speed = { ...DEFAULT_SPEED };
         this.position = { ...DEFAULT_POSITION };
@@ -51,12 +57,10 @@ export default class Ball implements GameObject {
     reset() {
         this.speed = { ...DEFAULT_SPEED }
 
-        this.position = { ...DEFAULT_POSITION };
+        this.position = { x: this.game.gameWidth / 2, y: this.game.gameHeight / 2 };
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-
-
         ctx.fillStyle = 'red';
         ctx.beginPath();
         ctx.ellipse(this.position.x, this.position.y, this.radius, this.radius, 0, 0, Math.PI * 2);
@@ -73,6 +77,8 @@ export default class Ball implements GameObject {
     }
 
     update(dt: number) {
+        if (this.state !== BallState.ROLLING) return;
+
         this.position.x += this.speed.x;
         this.position.y += this.speed.y;
 
@@ -106,6 +112,8 @@ export default class Ball implements GameObject {
             this.game.reduceLives();
 
             this.reset();
+
+            this.state = BallState.RESPAWNED;
         }
     }
 }

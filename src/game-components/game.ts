@@ -1,20 +1,21 @@
-import Ball from "./ball";
+import Ball, { BallState } from "./ball";
 import Paddle from "./paddle";
 import InputHandler from "./input";
-import { GameObject } from "./infra/gameObject";
+import { GameObject } from "../infra/gameObject";
 import Brick from './brick';
 import { buildLevel, GAME_LEVELS } from "./levels";
 import { Utils } from './utils';
-import { GAME_STATE } from "./infra/gamestate";
+import { GAME_STATE } from "../infra/gamestate";
 import LivesText from "./lives-text";
-import { MBus } from "./infra/message-bus";
-import { MessageData } from "./infra/message-data";
-import { MessageChannels } from "./infra/message-channels";
+import { MBus } from "../infra/message-bus";
+import { MessageData } from "../infra/message-data";
+import { MessageChannels } from "../infra/message-channels";
 import Scorer from './scorer';
 import ScoreText from "./score-text";
 import Background from "./background";
 import { Config } from './config';
 import Coin, { CoinState } from "./coin";
+import { GameContextType } from "../gameContext/GameContext";
 
 export default class Game {
     paddle!: Paddle;
@@ -30,6 +31,8 @@ export default class Game {
 
     gameState: GAME_STATE = GAME_STATE.MENU;
 
+    background: Background;
+
     lives: number = Config.LIVES;
 
     levels: Array<Array<Array<number>>> = GAME_LEVELS;
@@ -40,8 +43,6 @@ export default class Game {
 
     scorer: Scorer;
 
-    background: Background;
-
     //TimeElapsed in seconds
     timeElapsed: number = 0;
 
@@ -49,12 +50,15 @@ export default class Game {
 
     ticks: number = 0;
 
+    nextCoinCounter: number = Math.floor(Math.random() * (2000 - 1345) + 1345);
+
     constructor(
         public gameWidth: number,
         public gameHeight: number,
         private _utils: Utils,
         public ctx: CanvasRenderingContext2D,
-        public userDetails: any
+        public userDetails: any,
+        public gameContext: GameContextType
     ) {
         this.ball = new Ball(this);
         this.paddle = new Paddle(this);
@@ -148,12 +152,12 @@ export default class Game {
             || this.gameState === GAME_STATE.LOADING
         ) return;
 
-        console.log(this.ticks);
-
-        if (this.ticks % 724 == 0) {
+        if (this.ticks % this.nextCoinCounter == 0) {
             this.coins.push(new Coin(this));
 
             console.log(this.coins);
+
+            this.nextCoinCounter = Math.floor(Math.random() * (2000 - 1345) + 1345);
         }
 
         //0 lives game over
@@ -180,6 +184,9 @@ export default class Game {
                         if (res && res.paid) {
                             this.increaseLives();
                             this.gameState = GAME_STATE.RUNNING;
+
+                            // Respawn a new ball to play
+                            this.ball.state = BallState.RESPAWNED;
                         } else {
                             // This means there was an error or user cancelled the payment 
                             this._gameOver();
@@ -202,14 +209,6 @@ export default class Game {
 
 
         this._removeUnwantedGameObjects();
-    }
-
-    /**
-     * Handle things after payment has been handled
-     */
-    _handlePaymentHandled() {
-        MBus.publishData(new MessageData(MessageChannels.GAME_OVER));
-        this.scorer.resetScore();
     }
 
     _removeUnwantedGameObjects() {

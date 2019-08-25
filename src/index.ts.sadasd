@@ -1,6 +1,7 @@
-import Game from './game';
-import Utils from './utils';
+import Game from './game-components/game';
+import Utils from './game-components/utils';
 import { inherits } from 'util';
+import App from './App.svelte';
 
 const GAME_HEIGHT: number = 600;
 const GAME_WIDTH: number = 800;
@@ -20,7 +21,7 @@ function askUserAddress() {
     let btn = document.getElementById('submitAction') as HTMLButtonElement;
 
     btn.addEventListener('click', () => {
-        
+
         name = nameInput.value;
         address = addressInput.value;
 
@@ -67,5 +68,14 @@ function init() {
 
 window.addEventListener('load', () => {
     //    init();
-    askUserAddress();
+    // askUserAddress();
 });
+
+const app = new App({
+    target: document.body,
+    props: {
+        name: 'template'
+    }
+});
+
+export default app;

@@ -1,6 +1,6 @@
 import Game from "./game";
-import { MBus } from "./infra/message-bus";
-import { MessageChannels } from "./infra/message-channels";
+import { MBus } from "../infra/message-bus";
+import { MessageChannels } from "../infra/message-channels";
 
 export default class Audios {
 

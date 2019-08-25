@@ -1,6 +1,6 @@
 import Game from './game';
-import { Pos } from './infra/pos';
-import { GameObject } from './infra/gameObject';
+import { Pos } from '../infra/pos';
+import { GameObject } from '../infra/gameObject';
 
 export class Utils {
 

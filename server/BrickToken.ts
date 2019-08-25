@@ -1,9 +1,11 @@
 /**
  * Represent Brick Token smart contract
+ * 
+ * FOR server side
+ * 
  */
 import migrations from './migrations.json';
 import { web3 } from './web3';
-import fs from 'fs-extra';
 
 console.log(migrations);
 

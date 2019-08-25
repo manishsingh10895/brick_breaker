@@ -1,9 +1,9 @@
 import Game from "./game";
 import Ball from "./ball";
-import { GameObject } from "./infra/gameObject";
+import { GameObject } from "../infra/gameObject";
 import { COPYFILE_FICLONE_FORCE } from "constants";
 import Utils from "./utils";
-import { Collsion } from "./infra/collision";
+import { Collsion } from "../infra/collision";
 
 /**
  * Detects a collision between ball and a game object
@@ -31,11 +31,11 @@ export function detectRectRectCollision(rect1: GameObject, rect2: GameObject): C
         rect2.center = Utils.getCenter(rect2);
     }
 
-    let dx = rect1.center.x - rect2.center.x;
-    let dy = rect1.center.y - rect2.center.y;
+    let dx = rect1.center.x - rect2.center.x; //488 - 578 = 90
+    let dy = rect1.center.y - rect2.center.y; // 580 - 583 = 3
 
-    let dw = (rect1.width + rect2.width) / 2;
-    let dh = (rect1.height + rect2.height) / 2;
+    let dw = (rect1.width + rect2.width) / 2; // (150 + 32) / 2 = 91
+    let dh = (rect1.height + rect2.height) / 2; // (20 + 32) / 2 = 26
 
     let crossWidth = dw * dy;
     let crossHeight = dw * dx;

@@ -1,7 +1,7 @@
 import Web3 from 'web3';
 import { HttpProvider } from 'web3/providers';
-import Notifier from '../notifier';
-import { Config } from '../config';
+import Notifier from '../game-components/notifier';
+import { Config } from '../game-components/config';
 
 let provider;
 

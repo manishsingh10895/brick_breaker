@@ -1,12 +1,12 @@
-import { GameObject } from './infra/gameObject';
+import { GameObject } from '../infra/gameObject';
 import Game from './game';
-import { Pos } from './infra/pos';
+import { Pos } from '../infra/pos';
 import { detectBallCollision } from './collisionDetection';
 import Audios from './audios';
 import { Observable, Observer } from 'rxjs';
-import { MBus } from './infra/message-bus';
-import { MessageData } from './infra/message-data';
-import { MessageChannels } from './infra/message-channels';
+import { MBus } from '../infra/message-bus';
+import { MessageData } from '../infra/message-data';
+import { MessageChannels } from '../infra/message-channels';
 
 export default class Brick implements GameObject {
     width: number = 50;
