@@ -39,7 +39,7 @@
     "react-router-dom": "^5.0.1",
     "rxjs": "^6.5.2",
     "solc": "^0.5.11",
-    "svelte": "^3.9.1",
+    "svelte": "^3.49.0",
     "truffle-hdwallet-provider": "^1.0.17",
     "web3": "^1.2.1"
   }
